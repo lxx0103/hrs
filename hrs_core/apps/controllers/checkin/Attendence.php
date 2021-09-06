@@ -608,7 +608,7 @@ class Attendence extends MY_Controller
                         $work_time += (strtotime($filters['date'] .  ' ' . $department['data']['noon_break_start']) - strtotime($check_details[$i]))/60;//早上做满了
                         if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']))//如果下班卡晚于17:30
                         {
-                            $work_time += 4.5*60;//下午做满了
+                            $work_time += (strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']) - strtotime($filters['date'] .  ' ' . $department['data']['noon_break_end']))/60;
                             if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['night_break_end']))//如果下班卡晚于18:00
                             {
                                 $over_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['data']['night_break_end']))/60;//加班了

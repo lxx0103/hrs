@@ -253,64 +253,68 @@ class Calculate extends CI_Controller
                 {
                     $value[$i+1] = $key . ' ' . $in_time;
                 }
-                if(strtotime($value[$i]) >= strtotime($key . ' 12:00:00') && strtotime($value[$i]) < strtotime($key . ' 13:00:00'))
+                if(strtotime($value[$i]) >= strtotime($key . ' ' . $department['data']['noon_break_start']) && strtotime($value[$i]) < strtotime($key . ' ' . $department['data']['noon_break_end']))
                 {
-                    $value[$i] = $key . ' 13:00:00' ;
+                    $value[$i] = $key . ' ' . $department['data']['noon_break_end'] ;
                 }
-                if(strtotime($value[$i+1]) >= strtotime($key . ' 12:00:00') && strtotime($value[$i+1]) < strtotime($key . ' 13:00:00'))
+                if(strtotime($value[$i+1]) >= strtotime($key . ' ' . $department['data']['noon_break_start']) && strtotime($value[$i+1]) < strtotime($key . ' ' . $department['data']['noon_break_end']))
                 {
-                    $value[$i+1] = $key . ' 13:00:00' ;
+                    $value[$i+1] = $key . ' ' . $department['data']['noon_break_end'] ;
                 }
                 if(count($in_time_array) >= $i/2+1 && strtotime($value[$i]) > strtotime($key . ' ' . $in_time))//迟到时间
                 {
                     $late_time += (strtotime(substr($value[$i], 0, -3)) - strtotime($key . ' ' . $in_time))/60;
                     $value[$i] = $key . ' ' . $in_time;
                 }
-                if(strtotime($value[$i]) % 1800 >= 900)
-                {
+                if (strtotime($value[$i])%1800 != 0 ) {
                     $value[$i] = date('Y-m-d H:i:s', (strtotime($value[$i]) + (1800 - strtotime($value[$i])%1800)));
                 }
-                else
+                $value[$i+1] = date('Y-m-d H:i:s', (strtotime($value[$i+1]) - strtotime($value[$i+1])%1800));
+                // if(strtotime($value[$i]) % 1800 >= 900)
+                // {
+                //     $value[$i] = date('Y-m-d H:i:s', (strtotime($value[$i]) + (1800 - strtotime($value[$i])%1800)));
+                // }
+                // else
+                // {
+                //     $value[$i] = date('Y-m-d H:i:s', (strtotime($value[$i]) - strtotime($value[$i])%1800));
+                // }
+                // if(strtotime($value[$i+1]) % 1800 >= 900)
+                // {
+                //     $value[$i+1] = date('Y-m-d H:i:s', (strtotime($value[$i+1]) + (1800 - strtotime($value[$i+1])%1800)));
+                // }
+                // else
+                // {
+                //     $value[$i+1] = date('Y-m-d H:i:s', (strtotime($value[$i+1]) - strtotime($value[$i+1])%1800));
+                // }
+                if(strtotime($value[$i]) < strtotime($key . ' ' . $department['data']['noon_break_start']))//如果上班卡早于12点
                 {
-                    $value[$i] = date('Y-m-d H:i:s', (strtotime($value[$i]) - strtotime($value[$i])%1800));
-                }
-                if(strtotime($value[$i+1]) % 1800 >= 900)
-                {
-                    $value[$i+1] = date('Y-m-d H:i:s', (strtotime($value[$i+1]) + (1800 - strtotime($value[$i+1])%1800)));
-                }
-                else
-                {
-                    $value[$i+1] = date('Y-m-d H:i:s', (strtotime($value[$i+1]) - strtotime($value[$i+1])%1800));
-                }
-                if(strtotime($value[$i]) < strtotime($key . ' 12:00:00'))//如果上班卡早于12点
-                {
-                    if(strtotime($value[$i+1]) > strtotime($key . ' 12:00:00'))//如果下班卡晚于12点
+                    if(strtotime($value[$i+1]) > strtotime($key . ' ' . $department['data']['noon_break_start']))//如果下班卡晚于12点
                     {
-                        $work_time += (strtotime($key . ' 12:00:00') - strtotime($value[$i]))/60;//早上做满了
-                        if(strtotime($value[$i+1]) > strtotime($key . ' 17:30:00'))//如果下班卡晚于17:30
+                        $work_time += (strtotime($key . ' ' . $department['data']['noon_break_start']) - strtotime($value[$i]))/60;//早上做满了
+                        if(strtotime($value[$i+1]) > strtotime($key . ' ' . $department['data']['night_break_start']))//如果下班卡晚于17:30
                         {
-                            $work_time += 4.5*60;//下午做满了
-                            if(strtotime($value[$i+1]) > strtotime($key . ' 18:00:00'))//如果下班卡晚于18:00
+                            $work_time += (strtotime($key . ' ' . $department['data']['night_break_start']) - strtotime($key . ' ' . $department['data']['noon_break_end']))/60;
+                            if(strtotime($value[$i+1]) > strtotime($key . ' ' . $department['data']['night_break_end']))//如果下班卡晚于18:00
                             {
-                                if(strtotime($value[$i+1]) > (strtotime($key . ' 12:00:00')+86400)){
+                                if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['noon_break_start'])+86400)){
                                     $over_time += 1080;
-                                    if(strtotime($value[$i+1]) > (strtotime($key . ' 13:00:00')+86400)){
-                                        if(strtotime($value[$i+1]) > (strtotime($key . ' 17:30:00')+86400)){
+                                    if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['noon_break_end'])+86400)){
+                                        if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['night_break_start'])+86400)){
                                             $over_time += 280;
-                                            if(strtotime($value[$i+1]) > (strtotime($key . ' 18:00:00')+86400)){
-                                                $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 18:00:00') - 86400)/60;
+                                            if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['night_break_end'])+86400)){
+                                                $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['night_break_end']) - 86400)/60;
                                             }
                                         }else{
-                                           $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 13:00:00') - 86400)/60; 
+                                           $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['noon_break_end']) - 86400)/60; 
                                         }
                                     }
                                 }else{
-                                    $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 18:00:00'))/60;//加班了
+                                    $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['night_break_end']))/60;//加班了
                                 }
                             }
                         }else
                         {
-                            $work_time += (strtotime($value[$i+1]) - strtotime($key . ' 13:00:00'))/60;
+                            $work_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['noon_break_end']))/60;
                         }                    
                     }else//早上打卡下班了
                     {
@@ -318,27 +322,27 @@ class Calculate extends CI_Controller
                     }
                 }else
                 {
-                    if(strtotime($value[$i]) < strtotime($key . ' 17:30:00'))
+                    if(strtotime($value[$i]) < strtotime($key . ' ' . $department['data']['night_break_start']))
                     {
-                        if(strtotime($value[$i+1]) > strtotime($key . ' 17:30:00'))//如果下班卡晚于17:30
+                        if(strtotime($value[$i+1]) > strtotime($key . ' ' . $department['data']['night_break_start']))//如果下班卡晚于17:30
                         {
-                            $work_time += (strtotime($key . ' 17:30:00') - strtotime($value[$i]))/60;//下午做满了
-                            if(strtotime($value[$i+1]) > strtotime($key . ' 18:00:00'))//如果下班卡晚于18:00
+                            $work_time += (strtotime($key . ' ' . $department['data']['night_break_start']) - strtotime($value[$i]))/60;//下午做满了
+                            if(strtotime($value[$i+1]) > strtotime($key . ' ' . $department['data']['night_break_end']))//如果下班卡晚于18:00
                             {
-                                if(strtotime($value[$i+1]) > (strtotime($key . ' 12:00:00')+86400)){
+                                if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['noon_break_start'])+86400)){
                                     $over_time += 1080;
-                                    if(strtotime($value[$i+1]) > (strtotime($key . ' 13:00:00')+86400)){
-                                        if(strtotime($value[$i+1]) > (strtotime($key . ' 17:30:00')+86400)){
+                                    if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['noon_break_end'])+86400)){
+                                        if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['night_break_start'])+86400)){
                                             $over_time += 280;
-                                            if(strtotime($value[$i+1]) > (strtotime($key . ' 18:00:00')+86400)){
-                                                $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 18:00:00') - 86400)/60;
+                                            if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['night_break_end'])+86400)){
+                                                $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['night_break_end']) - 86400)/60;
                                             }
                                         }else{
-                                           $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 13:00:00') - 86400)/60; 
+                                           $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['noon_break_end']) - 86400)/60; 
                                         }
                                     }
                                 }else{
-                                    $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 18:00:00'))/60;//加班了
+                                    $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['night_break_end']))/60;//加班了
                                 }
                             }
                         }else
@@ -347,16 +351,16 @@ class Calculate extends CI_Controller
                         }
                     }else
                     {   
-                        if(strtotime($value[$i+1]) > (strtotime($key . ' 12:00:00')+86400)){
-                            $over_time += (strtotime($key . ' 12:00:00')+86400 - strtotime($value[$i]))/60;
-                            if(strtotime($value[$i+1]) > (strtotime($key . ' 13:00:00')+86400)){
-                                if(strtotime($value[$i+1]) > (strtotime($key . ' 17:30:00')+86400)){
+                        if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['noon_break_start'])+86400)){
+                            $over_time += (strtotime($key . ' ' . $department['data']['noon_break_start'])+86400 - strtotime($value[$i]))/60;
+                            if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['noon_break_end'])+86400)){
+                                if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['night_break_start'])+86400)){
                                     $over_time += 280;
-                                    if(strtotime($value[$i+1]) > (strtotime($key . ' 18:00:00')+86400)){
-                                        $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 18:00:00') - 86400)/60;
+                                    if(strtotime($value[$i+1]) > (strtotime($key . ' ' . $department['data']['night_break_end'])+86400)){
+                                        $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['night_break_end']) - 86400)/60;
                                     }
                                 }else{
-                                   $over_time += (strtotime($value[$i+1]) - strtotime($key . ' 13:00:00') - 86400)/60; 
+                                   $over_time += (strtotime($value[$i+1]) - strtotime($key . ' ' . $department['data']['noon_break_end']) - 86400)/60; 
                                 }
                             }
                         }else{
