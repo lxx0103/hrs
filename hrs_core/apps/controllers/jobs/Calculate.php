@@ -198,7 +198,9 @@ class Calculate extends CI_Controller
         $sum['error_time'] = 0;
         $sum['off_time'] = 0;
         $sum['late_time'] = 0;
+        $sum['late_count'] = 0;
         $sum['first_late'] = 0;
+        $sum['second_late'] = 0;
         $sum['other_late'] = 0;
         $sum['work_day'] = 0;
         $sum['check_count'] = 0;
@@ -474,10 +476,20 @@ class Calculate extends CI_Controller
             $sum['holiday_time'] += $day_sum['holiday_time'];
             $sum['off_time'] += $day_sum['off_time'];
             $sum['late_time'] += $day_sum['late_time'];
-            if($sum['first_late'] == 0){
-                $sum['first_late'] += $day_sum['late_time'];
-            }else{
-                $sum['other_late'] += $day_sum['late_time'];
+            if($day_sum['late_time'] > 0 ){
+                if($sum['late_count'] == 0){
+                    if($day_sum['late_time'] <= 5){
+                        $sum['first_late'] += $day_sum['late_time'];
+                    }else{
+                        $sum['first_late'] = 5;
+                        $sum['second_late'] += $day_sum['late_time'] - 5;
+                    }
+                    $sum['late_count'] += 1;
+                }else if($sum['late_count'] < 4) {
+                    $sum['second_late'] += $day_sum['late_time'];
+                }else {
+                    $sum['other_late'] += $day_sum['late_time'];
+                }
             }
             $sum['error_time'] += $day_sum['error_time'];
             $sum['check_count'] += $day_sum['check_count'];

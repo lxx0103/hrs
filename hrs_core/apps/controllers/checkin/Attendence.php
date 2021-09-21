@@ -575,7 +575,7 @@ class Attendence extends MY_Controller
                 if(count($in_time_array) >= $i/2+1 && strtotime($check_details[$i]) > strtotime($filters['date'] . ' ' . $in_time))//迟到时间
                 {
                     $late_time += (strtotime(substr($check_details[$i], 0, -3)) - strtotime($filters['date'] . ' ' . $in_time))/60;
-                    // $check_details[$i] = $filters['date'] . ' ' . $in_time;
+                    $check_details[$i] = $filters['date'] . ' ' . $in_time;
                 }
                 if (strtotime($check_details[$i])%1800 != 0 ) {
                     $check_details[$i] = date('Y-m-d H:i:s', (strtotime($check_details[$i]) + (1800 - strtotime($check_details[$i])%1800)));
@@ -1192,7 +1192,9 @@ class Attendence extends MY_Controller
         $sum['error_time'] = 0;
         $sum['off_time'] = 0;
         $sum['late_time'] = 0;
+        $sum['late_count'] = 0;
         $sum['first_late'] = 0;
+        $sum['second_late'] = 0;
         $sum['other_late'] = 0;
         $sum['work_day'] = 0;
         $sum['check_count'] = 0;
@@ -1468,11 +1470,21 @@ class Attendence extends MY_Controller
             $sum['leave_time'] += $day_sum['leave_time'];
             $sum['holiday_time'] += $day_sum['holiday_time'];
             $sum['off_time'] += $day_sum['off_time'];
-            $sum['late_time'] += $day_sum['late_time'];
-            if($sum['first_late'] == 0){
-                $sum['first_late'] += $day_sum['late_time'];
-            }else{
-                $sum['other_late'] += $day_sum['late_time'];
+            $sum['late_time'] += $day_sum['late_time'];            
+            if($day_sum['late_time'] > 0 ){
+                if($sum['late_count'] == 0){
+                    if($day_sum['late_time'] <= 5){
+                        $sum['first_late'] += $day_sum['late_time'];
+                    }else{
+                        $sum['first_late'] = 5;
+                        $sum['second_late'] += $day_sum['late_time'] - 5;
+                    }
+                    $sum['late_count'] += 1;
+                }else if($sum['late_count'] < 4) {
+                    $sum['second_late'] += $day_sum['late_time'];
+                }else {
+                    $sum['other_late'] += $day_sum['late_time'];
+                }
             }
             $sum['error_time'] += $day_sum['error_time'];
             $sum['check_count'] += $day_sum['check_count'];
