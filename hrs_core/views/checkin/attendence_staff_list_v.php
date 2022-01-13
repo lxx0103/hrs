@@ -44,6 +44,7 @@
                                     <th>旷工时间</th>
                                     <th>迟到时间</th>
                                     <th>第一次迟到</th>
+                                    <th>第二类迟到</th>
                                     <th>其他迟到</th>
                                     <th>操作</th>
                                 </tr>
@@ -64,6 +65,7 @@
                                     <td class="center"><?=$row['error_time']?></td>
                                     <td class="center"><?=$row['late_time']?></td>
                                     <td class="center"><?=$row['first_late']?></td>
+                                    <td class="center"><?=$row['second_late']?></td>
                                     <td class="center"><?=$row['other_late']?></td>
                                     <td class="center">
                                         <a class="btn btn-success" href="/checkin/attendence/detail?staff_code=<?=$row['staff_code']?>&month=<?=$filters['month']?>">明细</button>

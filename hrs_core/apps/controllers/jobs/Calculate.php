@@ -133,6 +133,7 @@ class Calculate extends CI_Controller
             $insert_sum['error_time'] = $calc_result['sum']['error_time'];
             $insert_sum['late_time'] = $calc_result['sum']['late_time'];
             $insert_sum['first_late'] = $calc_result['sum']['first_late'];
+            $insert_sum['second_late'] = $calc_result['sum']['second_late'];
             $insert_sum['other_late'] = $calc_result['sum']['other_late'];
             $insert_sum_result = $this->save_summary($insert_sum, 'SYSTEM');  
             $this->db->query('UPDATE s_queue_staff SET is_enable = 2 WHERE id = ' .$row['id'] );  
@@ -484,12 +485,12 @@ class Calculate extends CI_Controller
                         $sum['first_late'] = 5;
                         $sum['second_late'] += $day_sum['late_time'] - 5;
                     }
-                    $sum['late_count'] += 1;
                 }else if($sum['late_count'] < 4) {
                     $sum['second_late'] += $day_sum['late_time'];
                 }else {
                     $sum['other_late'] += $day_sum['late_time'];
                 }
+                $sum['late_count'] += 1;
             }
             $sum['error_time'] += $day_sum['error_time'];
             $sum['check_count'] += $day_sum['check_count'];

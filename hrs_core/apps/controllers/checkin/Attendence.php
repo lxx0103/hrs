@@ -280,7 +280,8 @@ class Attendence extends MY_Controller
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, 1, '旷工时间');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, 1, '迟到分钟');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, 1, '第一次迟到分钟');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, 1, '其他迟到分钟');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, 1, '第二类迟到分钟');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, 1, '其他迟到分钟');
         $line = 2;
         foreach ($summary['data'] as $attendence) {
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $line, $attendence['department']);
@@ -296,7 +297,8 @@ class Attendence extends MY_Controller
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $line, $attendence['error_time']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $line, $attendence['late_time']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $line, $attendence['first_late']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $line, $attendence['other_late']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $line, $attendence['second_late']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $line, $attendence['other_late']);
             $line++;
         }
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');
@@ -564,13 +566,13 @@ class Attendence extends MY_Controller
                 {
                     $check_details[$i+1] = $filters['date'] . ' ' . $in_time;
                 }
-                if(strtotime($check_details[$i]) >= strtotime($filters['date'] . ' ' . $department['data']['noon_break_start']) && strtotime($check_details[$i]) < strtotime($filters['date'] .  ' ' . $department['data']['noon_break_end']))
+                if(strtotime($check_details[$i]) >= strtotime($filters['date'] . ' ' . $department['noon_break_start']) && strtotime($check_details[$i]) < strtotime($filters['date'] .  ' ' . $department['noon_break_end']))
                 { //若是在午休时间打卡则默认为午休结束时间
-                    $check_details[$i] = $filters['date'] . ' ' . $department['data']['noon_break_end'] ;
+                    $check_details[$i] = $filters['date'] . ' ' . $department['noon_break_end'] ;
                 }
-                if(strtotime($check_details[$i+1]) >= strtotime($filters['date'] . ' ' . $department['data']['noon_break_start']) && strtotime($check_details[$i+1]) < strtotime($filters['date'] .  ' ' . $department['data']['noon_break_end']))
+                if(strtotime($check_details[$i+1]) >= strtotime($filters['date'] . ' ' . $department['noon_break_start']) && strtotime($check_details[$i+1]) < strtotime($filters['date'] .  ' ' . $department['noon_break_end']))
                 {
-                    $check_details[$i+1] = $filters['date'] .  ' ' . $department['data']['noon_break_end'] ;
+                    $check_details[$i+1] = $filters['date'] .  ' ' . $department['noon_break_end'] ;
                 }
                 if(count($in_time_array) >= $i/2+1 && strtotime($check_details[$i]) > strtotime($filters['date'] . ' ' . $in_time))//迟到时间
                 {
@@ -601,21 +603,22 @@ class Attendence extends MY_Controller
                 // echo '</pre>';
                 // print_r($check_details);
                 // echo '</pre>';
-                if(strtotime($check_details[$i]) < strtotime($filters['date'] .  ' ' . $department['data']['noon_break_start']))//如果上班卡早于12点
+                // die();
+                if(strtotime($check_details[$i]) < strtotime($filters['date'] .  ' ' . $department['noon_break_start']))//如果上班卡早于12点
                 {
-                    if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['noon_break_start']))//如果下班卡晚于12点
+                    if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['noon_break_start']))//如果下班卡晚于12点
                     {
-                        $work_time += (strtotime($filters['date'] .  ' ' . $department['data']['noon_break_start']) - strtotime($check_details[$i]))/60;//早上做满了
-                        if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']))//如果下班卡晚于17:30
+                        $work_time += (strtotime($filters['date'] .  ' ' . $department['noon_break_start']) - strtotime($check_details[$i]))/60;//早上做满了
+                        if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['night_break_start']))//如果下班卡晚于17:30
                         {
-                            $work_time += (strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']) - strtotime($filters['date'] .  ' ' . $department['data']['noon_break_end']))/60;
-                            if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['night_break_end']))//如果下班卡晚于18:00
+                            $work_time += 4.5*60;//下午做满了
+                            if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['night_break_end']))//如果下班卡晚于18:00
                             {
-                                $over_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['data']['night_break_end']))/60;//加班了
+                                $over_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['night_break_end']))/60;//加班了
                             }
                         }else
                         {
-                            $work_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['data']['noon_break_end']))/60;
+                            $work_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['noon_break_end']))/60;
                         }                    
                     }else//早上打卡下班了
                     {
@@ -623,14 +626,14 @@ class Attendence extends MY_Controller
                     }
                 }else
                 {
-                    if(strtotime($check_details[$i]) < strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']))
+                    if(strtotime($check_details[$i]) < strtotime($filters['date'] .  ' ' . $department['night_break_start']))
                     {
-                        if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']))//如果下班卡晚于17:30
+                        if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['night_break_start']))//如果下班卡晚于17:30
                         {
-                            $work_time += (strtotime($filters['date'] .  ' ' . $department['data']['night_break_start']) - strtotime($check_details[$i]))/60;//下午做满了
-                            if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['data']['night_break_end']))//如果下班卡晚于18:00
+                            $work_time += (strtotime($filters['date'] .  ' ' . $department['night_break_start']) - strtotime($check_details[$i]))/60;//下午做满了
+                            if(strtotime($check_details[$i+1]) > strtotime($filters['date'] .  ' ' . $department['night_break_end']))//如果下班卡晚于18:00
                             {
-                                $over_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['data']['night_break_end']))/60;//加班了
+                                $over_time += (strtotime($check_details[$i+1]) - strtotime($filters['date'] .  ' ' . $department['night_break_end']))/60;//加班了
                             }
                         }else
                         {
@@ -1479,12 +1482,12 @@ class Attendence extends MY_Controller
                         $sum['first_late'] = 5;
                         $sum['second_late'] += $day_sum['late_time'] - 5;
                     }
-                    $sum['late_count'] += 1;
                 }else if($sum['late_count'] < 4) {
                     $sum['second_late'] += $day_sum['late_time'];
                 }else {
                     $sum['other_late'] += $day_sum['late_time'];
                 }
+                $sum['late_count'] += 1;
             }
             $sum['error_time'] += $day_sum['error_time'];
             $sum['check_count'] += $day_sum['check_count'];
