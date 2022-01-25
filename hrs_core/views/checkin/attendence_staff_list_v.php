@@ -14,6 +14,7 @@
                                 </select>
                                 <input type="text" class="form-control span1" name="staff_code" placeholder="工号"<?=$filters['staff_code']?' value="'.$filters['staff_code'].'"':''?>>
                                 <input type="text" class="form-control span2 form_datetime" name="month" placeholder="月份"<?=$filters['month']?' value="'.$filters['month'].'"':''?>>
+                                <input type="text" class="form-control span2 form_datetime2" name="month_to" placeholder="月份"<?=$filters['month_to']?' value="'.$filters['month_to'].'"':''?>>
                                 <input type="submit" class="form-control btn btn-success" style="margin-bottom: 10px;" value="搜索" id="search_btn">
                                 <input type="button" class="form-control btn btn-warning" style="margin-bottom: 10px;" value="导出" id="expdata">
                                 <input type="button" class="form-control btn btn-warning" style="margin-bottom: 10px;" value="存为历史" id="history">
@@ -68,7 +69,7 @@
                                     <td class="center"><?=$row['second_late']?></td>
                                     <td class="center"><?=$row['other_late']?></td>
                                     <td class="center">
-                                        <a class="btn btn-success" href="/checkin/attendence/detail?staff_code=<?=$row['staff_code']?>&month=<?=$filters['month']?>">明细</button>
+                                        <a class="btn btn-success" href="/checkin/attendence/detail?staff_code=<?=$row['staff_code']?>&month=<?=$filters['month']?>&month_to=<?=$filters['month_to']?>">明细</button>
                                     </td>
                                 </tr>
                                 <?php endforeach?>
@@ -145,6 +146,13 @@ $('#save_page_zise').on('click', function(){
     });
 })
 $(".form_datetime").datetimepicker({
+    format: 'yyyy-mm',    
+    todayBtn:  1,
+    autoclose: 1,
+    startView: 4,
+    minView: 3
+});
+$(".form_datetime2").datetimepicker({
     format: 'yyyy-mm',    
     todayBtn:  1,
     autoclose: 1,

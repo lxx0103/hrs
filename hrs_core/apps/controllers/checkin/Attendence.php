@@ -191,6 +191,7 @@ class Attendence extends MY_Controller
         $filters['dept_id'] = trim($this->input->get('dept_id'));
         $filters['staff_code'] = trim($this->input->get('staff_code'));
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");
+        $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");
         $query_str = '?';
         foreach ($filters as $key => $value) 
         {
@@ -221,6 +222,7 @@ class Attendence extends MY_Controller
     {   
         $filters['staff_code'] = trim($this->input->get('staff_code'));
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");
+        $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");
         $detail = $this->Summary_m->get_all_detail($filters);
         $summary = $this->Summary_m->get_all_summary($filters);
         $detail_array = array();
@@ -261,6 +263,7 @@ class Attendence extends MY_Controller
         $filters['dept_id'] = trim($this->input->get('dept_id'));
         $filters['staff_code'] = trim($this->input->get('staff_code'));
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");
+        $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");
         $summary = $this->Summary_m->get_all_summary($filters);
         $this->load->library('PHPExcel');
         $this->load->library('PHPExcel/IOFactory');
@@ -303,7 +306,7 @@ class Attendence extends MY_Controller
         }
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="考勤_'.$filters['month'].'.xls"');
+        header('Content-Disposition: attachment;filename="考勤_'.$filters['month'].'-'.$filters['month_to'].'.xls"');
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
     }
@@ -1515,6 +1518,7 @@ class Attendence extends MY_Controller
         $filters['dept_id'] = trim($this->input->get('dept_id'));
         $filters['staff_code'] = trim($this->input->get('staff_code'));
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");      
+        $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");      
         $detail = $this->Summary_m->get_all_detail($filters);
         $summary = $this->Summary_m->get_all_summary($filters);
         $summary_arr = array();
@@ -1626,7 +1630,7 @@ class Attendence extends MY_Controller
         }
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="考勤_'.$file_name . '-'. $filters['month'].'.xls"');
+        header('Content-Disposition: attachment;filename="考勤_'.$file_name . '-'. $filters['month']. '-' . $filters['month_to'] .'.xls"');
         header('Cache-Control: max-age=0');
         $objWriter->save('php://output');
     }
