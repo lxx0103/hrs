@@ -10,7 +10,7 @@ class Summary_m extends CI_Model {
 
     public function get_all_summary($filters)
     {
-        $sql = "SELECT dept_id, department, name, staff_code, sum(work_day) as work_day, sum(check_count) as check_count, sum(legal_work_time) as legal_work_time, sum(work_time) as work_time, sum(over_time) as over_time, sum(off_time) as off_time, sum(leave_time) as leave_time, sum(holiday_time) as holiday_time, sum(error_time) as error_time, sum(late_time) as late_time, sum(first_late) as first_late, sum(second_late) as second_late, sum(other_late) as other_late FROM u_month_summary WHERE 1";
+        $sql = "SELECT '汇总' as month,dept_id, department, name, staff_code, sum(work_day) as work_day, sum(check_count) as check_count, sum(legal_work_time) as legal_work_time, sum(work_time) as work_time, sum(over_time) as over_time, sum(off_time) as off_time, sum(leave_time) as leave_time, sum(holiday_time) as holiday_time, sum(error_time) as error_time, sum(late_time) as late_time, sum(first_late) as first_late, sum(second_late) as second_late, sum(other_late) as other_late FROM u_month_summary WHERE 1";
         $count_sql = "SELECT count(distinct(staff_code)) AS total FROM u_month_summary WHERE 1";
         $where = array();
         if(isset($filters['staff_code']) && $filters['staff_code'])

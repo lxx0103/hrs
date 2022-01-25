@@ -324,6 +324,7 @@ class Attendence extends MY_Controller
     {
         $filters['staff_code'] = trim($this->input->get('staff_code'));
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");
+        $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");
         $attendence = $this->Summary_m->get_all_detail($filters);
         $summary = $this->Summary_m->get_all_summary($filters);
         $summary_data = $summary['data'][0];
@@ -763,6 +764,7 @@ class Attendence extends MY_Controller
         $filters['dept_id'] = trim($this->input->get('dept_id'));
         $filters['staff_code'] = trim($this->input->get('staff_code'));
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");        
+        $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");        
         $detail = $this->Summary_m->get_all_detail($filters);
         $summary = $this->Summary_m->get_all_summary($filters);
         foreach ($detail['data'] as $detail_row) {

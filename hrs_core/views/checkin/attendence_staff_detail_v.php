@@ -23,7 +23,7 @@
                                     <th>旷工时间</th>
                                     <th>迟到时间</th>
                                     <th>班次</th>
-                                    <th><a class="btn btn-warning" href="/checkin/attendence/expdetail?month=<?=$_GET['month']?>&staff_code=<?=$_GET['staff_code']?>">导出</a></th>
+                                    <th><a class="btn btn-warning" href="/checkin/attendence/expdetail?month=<?=$_GET['month']?>&month_to=<?=$_GET['month_to']?>&staff_code=<?=$_GET['staff_code']?>">导出</a></th>
                                 </tr>
                             </thead>
                             <tbody>
