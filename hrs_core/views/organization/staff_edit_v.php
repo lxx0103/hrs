@@ -149,6 +149,13 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="form-inline">
+                                    <div>
+                                        <label class="form-inline" />每月应出勤小时: 
+                                            <input type="text" class="form-control" name="legal_work_hour" id="legal_work_hour" >
+                                        </label>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="staff_id" id="staff_id" value="<?=$staff['id']?>">
                                 <input type="button" class="form-control btn btn-success" id="save_staff" style="margin-bottom: 10px;" value="保存">
                             </form>
@@ -297,6 +304,13 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="form-inline">
+                                    <div>
+                                        <label class="form-inline" />每月应出勤小时: 
+                                            <input type="text" class="form-control" name="legal_work_hour" id="legal_work_hour" >
+                                        </label>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="staff_id" id="staff_id" value="0">
                                 <input type="button" class="form-control btn btn-success" id="save_staff" style="margin-bottom: 10px;" value="保存">
                             </form>
@@ -344,6 +358,7 @@ $('#save_staff').on('click', function(){
             'contract_from':$('#contract_from').val(),
             'contract_to':$('#contract_to').val(),
             'id':$('#staff_id').val(),
+            'legal_work_hour':$('#legal_work_hour').val(),
             'type':'<?=$act?>',
         },
         dataType: 'json',

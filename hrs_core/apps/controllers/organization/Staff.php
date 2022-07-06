@@ -110,6 +110,7 @@ class Staff extends MY_Controller
         $staff_data['room'] = $this->input->post('room');
         $staff_data['contract_from'] = $this->input->post('contract_from');
         $staff_data['contract_to'] = $this->input->post('contract_to');
+        $staff_data['legal_work_hour'] = $this->input->post('legal_work_hour');
         $error_message = '';
         if($staff_data['staff_code'] == ''){
             $error_message .= '缺少工号,';

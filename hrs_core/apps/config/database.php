@@ -74,10 +74,10 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost;port=8889;dbname=hrs',
+	'dsn'	=> 'mysql:host=localhost;port=3306;dbname=hrs',
 	'hostname' => '',
 	'username' => 'root',
-	'password' => 'root',
+	'password' => '',
 	'database' => 'hrs',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',

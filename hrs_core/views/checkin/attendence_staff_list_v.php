@@ -37,6 +37,7 @@
                                     <th>工号</th>
                                     <th>出勤天数</th>
                                     <th>应上班时间</th>
+                                    <th>实际应出勤</th>
                                     <th>正班时间</th>
                                     <th>加班时间</th>
                                     <th>缺勤时间</th>
@@ -58,6 +59,7 @@
                                     <td class="center"><?=$row['staff_code']?></td>
                                     <td class="center"><?=$row['work_day']?></td>
                                     <td class="center"><?=$row['legal_work_time']?></td>
+                                    <td class="center"><?=$row['legal_work_hour']?></td>
                                     <td class="center"><?=$row['work_time']?></td>
                                     <td class="center"><?=$row['over_time']?></td>
                                     <td class="center"><?=$row['off_time']?></td>

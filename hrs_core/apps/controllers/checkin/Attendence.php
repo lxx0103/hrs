@@ -209,6 +209,14 @@ class Attendence extends MY_Controller
             $sorted_depts[$row['id']] = $row;
         }
         $summary = $this->Summary_m->get_all_summary($filters);
+        $users = $this->Staff_m->get_all_staff(array(), 0);
+        for ($i=0; $i < count($summary['data']); $i++) { 
+            for ($j=0; $j < count($users['data']); $j++ ){
+                if ($summary['data'][$i]['staff_code'] == $users['data'][$j]['staff_code']) {
+                    $summary['data'][$i]['legal_work_hour'] = $users['data'][$j]['legal_work_hour'];
+                }
+            }
+        }
         $this->data['staff'] = $summary['data'];
         $this->data['depts'] = $depts['data'];
         $this->data['sorted_depts'] = $sorted_depts;

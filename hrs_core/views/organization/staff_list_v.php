@@ -50,6 +50,7 @@
                                     <th>地址</th>
                                     <th>入职时间</th>
                                     <th>离职时间</th>
+                                    <th>每月应出勤</th>
                                     <th>是否启用</th>
                                     <th><a class="btn btn-success" href="/organization/staff/edit">新增员工</a></th>
                                 </tr>
@@ -68,6 +69,7 @@
                                     <td class="center"><?=$row['address']?></td>
                                     <td class="center"><?=$row['in_date']?></td>
                                     <td class="center"><?=$row['out_date']?></td>
+                                    <td class="center"><?=$row['legal_work_hour']?></td>
                                     <td class="center"><?=$row['is_enable']==1?'是':'否'?></td>
                                     <td class="center">
                                         <button class="btn btn-warning edit_out_date" value="<?=$row['id']?>">离职</button>
