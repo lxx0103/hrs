@@ -273,6 +273,14 @@ class Attendence extends MY_Controller
         $filters['month'] = $this->input->get('month')?trim($this->input->get('month')):date("Y-m");
         $filters['month_to'] = $this->input->get('month_to')?trim($this->input->get('month_to')):date("Y-m");
         $summary = $this->Summary_m->get_all_summary($filters);
+        $users = $this->Staff_m->get_all_staff(array(), 0);
+        for ($i=0; $i < count($summary['data']); $i++) { 
+            for ($j=0; $j < count($users['data']); $j++ ){
+                if ($summary['data'][$i]['staff_code'] == $users['data'][$j]['staff_code']) {
+                    $summary['data'][$i]['legal_work_hour'] = $users['data'][$j]['legal_work_hour'];
+                }
+            }
+        }
         $this->load->library('PHPExcel');
         $this->load->library('PHPExcel/IOFactory');
         $objPHPExcel =  new PHPExcel();
@@ -283,16 +291,17 @@ class Attendence extends MY_Controller
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, 1, '工号');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, 1, '出勤天数');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, 1, '应上班时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, 1, '正班时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, 1, '加班时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, 1, '缺勤时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(8, 1, '请假时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, 1, '放假时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, 1, '旷工时间');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, 1, '迟到分钟');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, 1, '第一次迟到分钟');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, 1, '第二类迟到分钟');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, 1, '其他迟到分钟');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, 1, '实际应出勤');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, 1, '正班时间');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, 1, '加班时间');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(8, 1, '缺勤时间');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, 1, '请假时间');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, 1, '放假时间');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, 1, '旷工时间');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, 1, '迟到分钟');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, 1, '第一次迟到分钟');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, 1, '第二类迟到分钟');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(15, 1, '其他迟到分钟');
         $line = 2;
         foreach ($summary['data'] as $attendence) {
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $line, $attendence['department']);
@@ -300,16 +309,17 @@ class Attendence extends MY_Controller
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, $line, $attendence['staff_code']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $line, $attendence['work_day']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $line, $attendence['legal_work_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $line, $attendence['work_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, $line, $attendence['over_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $line, $attendence['off_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(8, $line, $attendence['leave_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $line, $attendence['holiday_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $line, $attendence['error_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $line, $attendence['late_time']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $line, $attendence['first_late']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $line, $attendence['second_late']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $line, $attendence['other_late']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $line, $attendence['legal_work_hour']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, $line, $attendence['work_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $line, $attendence['over_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(8, $line, $attendence['off_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $line, $attendence['leave_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(10, $line, $attendence['holiday_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $line, $attendence['error_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $line, $attendence['late_time']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $line, $attendence['first_late']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $line, $attendence['second_late']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $line, $attendence['other_late']);
             $line++;
         }
         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');
