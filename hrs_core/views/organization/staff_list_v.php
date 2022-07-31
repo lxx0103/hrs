@@ -5,7 +5,7 @@
                 <div class="widget-box">
                     <div class="widget-content">
                         <div>
-                            <form>
+                            <form id="form_search">
                                 <select name="dept_id" class="span2">
                                     <option value="0">请选择部门</option>
                                     <?php foreach($depts as $dept):?>
@@ -20,6 +20,7 @@
                                     <option value="2"<?=$filters['is_working']==2?' selected':''?>>离职</option>
                                 </select>
                                 <input type="submit" class="form-control btn btn-success" style="margin-bottom: 10px;" value="搜索">
+                                <input type="button" class="form-control btn btn-warning" style="margin-bottom: 10px;" value="导出" id="expdata">
                             </form>
                             <form action="/organization/staff/uploadstaff" enctype="multipart/form-data" method="post">
                                 <input type="file" name="staff_xls" id="staff_xls" style="display: none;">
@@ -212,6 +213,10 @@ $('.datepicker').datepicker({
 });
 $('input[id=staff_xls]').change(function(){
     $('#btn_1').val($(this).val());
+})
+$("#expdata").on("click", function(){
+    $('#form_search').attr("action", "/organization/staff/expstaff");
+    $('#form_search').submit();
 })
 </script>
 <?php require_once(VIEWPATH.'common/foot_v.php');?>
