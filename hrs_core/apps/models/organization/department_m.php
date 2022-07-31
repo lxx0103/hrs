@@ -40,14 +40,14 @@ class Department_m extends CI_Model {
         return array('status' => 2, 'msg' => '部门不存在', 'data' => array() );
     }
 
-    public function save($dept_id, $dept_name, $has_overtime, $noon_break_start, $noon_break_end, $night_break_start, $night_break_end, $is_enable, $user)
+    public function save($dept_id, $dept_name, $xianbie, $floor, $rengongleibie, $gongziguishufeiyong, $has_overtime, $noon_break_start, $noon_break_end, $night_break_start, $night_break_end, $is_enable, $user)
     {
         if($dept_id == 0)
         {
-            $data = array('dept_name' => $dept_name, 'has_overtime' => $has_overtime, 'noon_break_start' => $noon_break_start, 'noon_break_end' => $noon_break_end, 'night_break_start' => $night_break_start, 'night_break_end' => $night_break_end, 'is_enable' => $is_enable, 'create_user' => $user, 'update_user' => $user);
+            $data = array('dept_name' => $dept_name, 'xianbie'=>$xianbie, 'floor'=>$floor, 'rengongleibie'=>$rengongleibie, 'gongziguishufeiyong'=>$gongziguishufeiyong, 'has_overtime' => $has_overtime, 'noon_break_start' => $noon_break_start, 'noon_break_end' => $noon_break_end, 'night_break_start' => $night_break_start, 'night_break_end' => $night_break_end, 'is_enable' => $is_enable, 'create_user' => $user, 'update_user' => $user);
             $str = $this->db->insert_string('s_department', $data);
         }else{
-            $data = array('dept_name' => $dept_name, 'has_overtime' => $has_overtime, 'noon_break_start' => $noon_break_start, 'noon_break_end' => $noon_break_end, 'night_break_start' => $night_break_start, 'night_break_end' => $night_break_end, 'is_enable' => $is_enable, 'update_user' => $user);
+            $data = array('dept_name' => $dept_name, 'xianbie'=>$xianbie, 'floor'=>$floor, 'rengongleibie'=>$rengongleibie, 'gongziguishufeiyong'=>$gongziguishufeiyong, 'has_overtime' => $has_overtime, 'noon_break_start' => $noon_break_start, 'noon_break_end' => $noon_break_end, 'night_break_start' => $night_break_start, 'night_break_end' => $night_break_end, 'is_enable' => $is_enable, 'update_user' => $user);
             $where = "id = ". $dept_id;
             $str = $this->db->update_string('s_department', $data, $where);
         }
