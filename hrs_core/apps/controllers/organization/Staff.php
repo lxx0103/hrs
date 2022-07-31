@@ -96,21 +96,15 @@ class Staff extends MY_Controller
         $staff_data['out_date'] = $this->input->post('out_date');
         $staff_data['shifouzili'] = $this->input->post('shifouzili');
         $staff_data['gongziyijiesuan'] = $this->input->post('gongziyijiesuan');
-        $staff_data['xianbie'] = $this->input->post('xianbie');
         $staff_data['dept_id'] = $this->input->post('dept_id');
         $staff_data['gangwei'] = $this->input->post('gangwei');
-        $staff_data['floor'] = $this->input->post('floor');
-        $staff_data['rengongleibie'] = $this->input->post('rengongleibie');
         $staff_data['legal_work_hour'] = $this->input->post('legal_work_hour');
         $staff_data['jiabanfeibiaozhun'] = $this->input->post('jiabanfeibiaozhun');
         $staff_data['shifouxuetu'] = $this->input->post('shifouxuetu');
         $staff_data['jieshaoren'] = $this->input->post('jieshaoren');
         $staff_data['xinzhibaodi'] = $this->input->post('xinzhibaodi');
         $staff_data['miankouhuoshifei'] = $this->input->post('miankouhuoshifei');
-        $staff_data['gongziguishufeiyong'] = $this->input->post('gongziguishufeiyong');
-        $staff_data['birthday'] = $this->input->post('birthday');
         $staff_data['marrige'] = $this->input->post('marrige');
-        $staff_data['gender'] = $this->input->post('gender');
         $staff_data['shifoudangyuan'] = $this->input->post('shifoudangyuan');
         $staff_data['shebaohao'] = $this->input->post('shebaohao');
         $staff_data['education'] = $this->input->post('education');
@@ -135,7 +129,13 @@ class Staff extends MY_Controller
         $staff_data['kaihuhang'] = $this->input->post('kaihuhang');
         $staff_data['zhihang'] = $this->input->post('zhihang');
         $staff_data['id'] = $this->input->post('id');
-        $error_message = '';
+        $error_message = '';        
+        if($staff_data['identification'] == ''){
+            $error_message .= '身份证错误';
+        }        
+        $staff_data['birthday'] = substr($staff_data['identification'], 6, 8);
+        $staff_data['gender'] = substr($staff_data['identification'], -2, 1)%2 == 1? 1:2;
+        // echo $staff_data['gender'];die();
         if($staff_data['staff_code'] == ''){
             $error_message .= '缺少工号,';
         }
@@ -145,9 +145,14 @@ class Staff extends MY_Controller
         if($staff_data['dept_id'] == 0){
             $error_message .= '部门错误,';
         }
-        if($staff_data['gender'] == 0){
-            $error_message .= '性别错误,';
+        $department = $this->Department_m->get_one_dept($staff_data['dept_id'], 0);
+        if($department['status'] != 1){
+            $error_message .= '部门错误';
         }
+        $staff_data['xianbie'] = $department['data']['xianbie'];
+        $staff_data['floor'] = $department['data']['floor'];
+        $staff_data['rengongleibie'] = $department['data']['rengongleibie'];
+        $staff_data['gongziguishufeiyong'] = $department['data']['gongziguishufeiyong'];
         if($error_message != ''){
             echo json_encode(array('status' => 2, 'msg' => $error_message));
             die();
@@ -160,6 +165,7 @@ class Staff extends MY_Controller
     public function uploadstaff()
     {
         $config['upload_path'] = 'E:\wamp\www\hrs\uploads';
+        // $config['upload_path'] = '/Users/lewis/Project/hrs/hrs/uploads';
         $config['allowed_types'] = 'xls';
         $config['max_size'] = 0;
         $config['max_width'] = 0;
@@ -174,6 +180,7 @@ class Staff extends MY_Controller
             $this->load->library('PHPExcel/IOFactory');
             $reader = new PHPExcel_Reader_Excel5();
             $PHPExcel = $reader->load('E:\wamp\www\hrs\uploads\\'.$config['file_name'].'.xls');
+            // $PHPExcel = $reader->load('/Users/lewis/Project/hrs/hrs/uploads/'.$config['file_name'].'.xls');
             $currentSheet = $PHPExcel->getSheet(0);
             $allColumn = $currentSheet->getHighestColumn();
             $allRow = $currentSheet->getHighestRow();
@@ -183,7 +190,7 @@ class Staff extends MY_Controller
                 $staff_data = array();
                 $staff_data['name'] = $currentSheet->getCell('A'. $currentRow)->getValue();
                 $staff_data['staff_code'] = $currentSheet->getCell('B'. $currentRow)->getValue();
-                $staff_data['zhiweizhuangtai'] = $currentSheet->getCell('c'. $currentRow)->getValue();
+                $staff_data['zhiweizhuangtai'] = $currentSheet->getCell('C'. $currentRow)->getValue();
                 $staff_data['identification'] = $currentSheet->getCell('D'. $currentRow)->getValue();
                 $staff_data['mobile'] = $currentSheet->getCell('E'. $currentRow)->getValue();
                 $staff_data['leibie'] = $currentSheet->getCell('F'. $currentRow)->getValue();
@@ -195,21 +202,21 @@ class Staff extends MY_Controller
                 // $staff_data['out_date'] = gmdate('Y-m-d', ($currentSheet->getCell('L'. $currentRow)->getValue()- 25569) * 24 * 60 * 60);
                 $staff_data['shifouzili'] = $currentSheet->getCell('M'. $currentRow)->getValue();
                 $staff_data['gongziyijiesuan'] = $currentSheet->getCell('N'. $currentRow)->getValue();
-                $staff_data['xianbie'] = $currentSheet->getCell('O'. $currentRow)->getValue();
+                // $staff_data['xianbie'] = $currentSheet->getCell('O'. $currentRow)->getValue();
                 $staff_data['dept_id'] = $currentSheet->getCell('P'. $currentRow)->getValue();
                 $staff_data['gangwei'] = $currentSheet->getCell('Q'. $currentRow)->getValue();
-                $staff_data['floor'] = $currentSheet->getCell('R'. $currentRow)->getValue();
-                $staff_data['rengongleibie'] = $currentSheet->getCell('S'. $currentRow)->getValue();
+                // $staff_data['floor'] = $currentSheet->getCell('R'. $currentRow)->getValue();
+                // $staff_data['rengongleibie'] = $currentSheet->getCell('S'. $currentRow)->getValue();
                 $staff_data['legal_work_hour'] = $currentSheet->getCell('T' . $currentRow)->getValue();
                 $staff_data['jiabanfeibiaozhun'] = $currentSheet->getCell('U'. $currentRow)->getValue();
                 $staff_data['shifouxuetu'] = $currentSheet->getCell('V'. $currentRow)->getValue();
                 $staff_data['jieshaoren'] = $currentSheet->getCell('W'. $currentRow)->getValue();
                 $staff_data['xinzhibaodi'] = $currentSheet->getCell('X'. $currentRow)->getValue();
                 $staff_data['miankouhuoshifei'] = $currentSheet->getCell('Y'. $currentRow)->getValue();
-                $staff_data['gongziguishufeiyong'] = $currentSheet->getCell('Z'. $currentRow)->getValue();
-                $staff_data['birthday'] = gmdate('Y-m-d', ($currentSheet->getCell('AA'. $currentRow)->getValue()- 25569) * 24 * 60 * 60);
+                // $staff_data['gongziguishufeiyong'] = $currentSheet->getCell('Z'. $currentRow)->getValue();
+                // $staff_data['birthday'] = gmdate('Y-m-d', ($currentSheet->getCell('AA'. $currentRow)->getValue()- 25569) * 24 * 60 * 60);
                 $staff_data['marrige'] = $currentSheet->getCell('AB'. $currentRow)->getValue();
-                $staff_data['gender'] = $currentSheet->getCell('AC'. $currentRow)->getValue();
+                // $staff_data['gender'] = $currentSheet->getCell('AC'. $currentRow)->getValue();
                 $staff_data['shifoudangyuan'] = $currentSheet->getCell('AD'. $currentRow)->getValue();
                 $staff_data['shebaohao'] = $currentSheet->getCell('AE'. $currentRow)->getValue();
                 $staff_data['education'] = $currentSheet->getCell('AF'. $currentRow)->getValue();
@@ -240,6 +247,12 @@ class Staff extends MY_Controller
                     }
                 }
                 $error_message = '';
+                if($staff_data['identification'] == ''){
+                    $error_message .= '缺少身份证,';
+                }else{                    
+                    $staff_data['birthday'] = substr($staff_data['identification'], 6, 8);
+                    $staff_data['gender'] = substr($staff_data['identification'], -2, 1)%2 == 1? 1:2;
+                }
                 if($staff_data['staff_code'] == ''){
                     $error_message .= '缺少工号,';
                 }
@@ -254,6 +267,10 @@ class Staff extends MY_Controller
                         $error_message .= '部门不存在,';
                     }else{
                         $staff_data['dept_id'] = $dept['data']['id'];
+                        $staff_data['xianbie'] = $dept['data']['xianbie'];
+                        $staff_data['floor'] = $dept['data']['floor'];
+                        $staff_data['rengongleibie'] = $dept['data']['rengongleibie'];
+                        $staff_data['gongziguishufeiyong'] = $dept['data']['gongziguishufeiyong'];
                     }
                 }
                 if($error_message != '')
@@ -261,7 +278,7 @@ class Staff extends MY_Controller
                     $error_message .= '出错';
                     $all_error .= '第' . $currentRow . '行' . $error_message;
                 }else{
-                    $staff_data['gender'] = $staff_data['gender'] == '男'?'1':'2';
+                    // $staff_data['gender'] = $staff_data['gender'] == '男'?'1':'2';
                     $machine_id = $this->Staff_m->get_machine_id_rel($staff_data['staff_code']);
                     if($machine_id['status'] == 1){
                         $staff_data['machine_id'] = $machine_id['data']['machine_id'];

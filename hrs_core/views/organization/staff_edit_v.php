@@ -64,7 +64,7 @@
                                 <div class="form-inline">
                                     <div>
                                         <label class="form-inline" />线别:                                         
-                                            <input type="text" class="form-control " name="xianbie" id="xianbie"  value="<?=$staff['xianbie']?>">
+                                            <input type="text" class="form-control " name="xianbie" id="xianbie" value="<?=$staff['xianbie']?>" readonly>
                                         </label>
                                         <label class="form-inline" />部门:                                         
                                             <select name="dept_id" id="dept_id">
@@ -78,10 +78,10 @@
                                             <input type="text" class="form-control " name="gangwei" id="gangwei"  value="<?=$staff['gangwei']?>">
                                         </label>
                                         <label class="form-inline" />所属楼层: 
-                                            <input type="text" class="form-control " name="floor" id="floor"  value="<?=$staff['floor']?>">
+                                            <input type="text" class="form-control " name="floor" id="floor"  value="<?=$staff['floor']?>" readonly>
                                         </label>
                                         <label class="form-inline" />人工类别:                                         
-                                            <input type="text" class="form-control" name="rengongleibie" id="rengongleibie"  value="<?=$staff['rengongleibie']?>">
+                                            <input type="text" class="form-control" name="rengongleibie" id="rengongleibie" value="<?=$staff['rengongleibie']?>" readonly>
                                         </label>
                                     </div>
                                 </div>
@@ -110,10 +110,10 @@
                                             <input type="text" class="form-control" name="miankouhuoshifei" id="miankouhuoshifei" value="<?=$staff['miankouhuoshifei']?>" >
                                         </label>
                                         <label class="form-inline" />工资归属费用: 
-                                            <input type="text" class="form-control" name="gongziguishufeiyong" id="gongziguishufeiyong"  value="<?=$staff['gongziguishufeiyong']?>">
+                                            <input type="text" class="form-control" name="gongziguishufeiyong" id="gongziguishufeiyong"   value="<?=$staff['gongziguishufeiyong']?>" readonly>
                                         </label>
                                         <label class="form-inline" />出生日期:                                         
-                                            <input type="text" class="form-control" name="birthday" id="birthday"  value="<?=$staff['birthday']?>">
+                                            <input type="text" class="form-control" name="birthday" id="birthday"  value="<?=$staff['birthday']?>" readonly>
                                         </label>
                                         <label class="form-inline" />出生月份:
                                             <input type="text" class="form-control" name="chushengyuefen" id="chushengyuefen"  value="<?=substr($staff['birthday'], 5, 2)?>" readonly>
@@ -131,12 +131,8 @@
                                         <label class="form-inline" />年龄:
                                             <input type="text" class="form-control " name="gongling" id="gongling"  value="<?=floor((time() - strtotime($staff['birthday']))/60/60/24/365)?>" readonly>
                                         </label>
-                                        <label class="form-inline" />性别:                         
-                                            <select name="gender" id="gender">
-                                                <option value="0">请选择性别</option>
-                                                <option value="1"<?=$staff['gender']==1?' selected':''?>>男</option>
-                                                <option value="2"<?=$staff['gender']==2?' selected':''?>>女</option>
-                                            </select>
+                                        <label class="form-inline" />性别:               
+                                            <input type="text" class="form-control " name="gender" id="gender"  value="<?=$staff['gender']==1?'男':'女'?>" readonly>
                                         </label>
                                         <label class="form-inline" />是否党员:                                         
                                             <input type="text" class="form-control" name="shifoudangyuan" id="shifoudangyuan"  value="<?=$staff['shifoudangyuan']?>">
@@ -240,7 +236,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="staff_id" id="staff_id" value="<?=$staff['id']?>">
-                                <input type="button" class="form-control btn btn-success" id="save_staff" style="margin-bottom: 10px;" value="保存" disabled="disabled">
+                                <input type="button" class="form-control btn btn-success" id="save_staff" style="margin-bottom: 10px;" value="保存">
                             </form>
                             <?php endif;?>
                             <?php if($act=='new'): ?>                            
@@ -301,9 +297,6 @@
                                 </div>
                                 <div class="form-inline">
                                     <div>
-                                        <label class="form-inline" />线别:                                         
-                                            <input type="text" class="form-control " name="xianbie" id="xianbie">
-                                        </label>
                                         <label class="form-inline" />部门:                                         
                                             <select name="dept_id" id="dept_id">
                                                 <option value="0">请选择部门</option>
@@ -314,12 +307,6 @@
                                         </label>
                                         <label class="form-inline" />岗位:                                         
                                             <input type="text" class="form-control " name="gangwei" id="gangwei">
-                                        </label>
-                                        <label class="form-inline" />所属楼层: 
-                                            <input type="text" class="form-control " name="floor" id="floor">
-                                        </label>
-                                        <label class="form-inline" />人工类别:                                         
-                                            <input type="text" class="form-control" name="rengongleibie" id="rengongleibie">
                                         </label>
                                     </div>
                                 </div>
@@ -347,25 +334,12 @@
                                         <label class="form-inline" />是否免扣伙食费: 
                                             <input type="text" class="form-control" name="miankouhuoshifei" id="miankouhuoshifei">
                                         </label>
-                                        <label class="form-inline" />工资归属费用: 
-                                            <input type="text" class="form-control" name="gongziguishufeiyong" id="gongziguishufeiyong">
-                                        </label>
-                                        <label class="form-inline" />出生日期:                                         
-                                            <input type="text" class="form-control" name="birthday" id="birthday">
-                                        </label>
                                     </div>
                                 </div>
                                 <div class="form-inline">
                                     <div>
                                         <label class="form-inline" />婚否: 
                                             <input type="text" class="form-control " name="marrige" id="marrige">
-                                        </label>
-                                        <label class="form-inline" />性别:                         
-                                            <select name="gender" id="gender">
-                                                <option value="0">请选择性别</option>
-                                                <option value="1">男</option>
-                                                <option value="2">女</option>
-                                            </select>
                                         </label>
                                         <label class="form-inline" />是否党员:                                         
                                             <input type="text" class="form-control" name="shifoudangyuan" id="shifoudangyuan">
@@ -481,59 +455,53 @@ $('#save_staff').on('click', function(){
     $.ajax({ 
         url: "/organization/staff/savestaff",
         data: {
-            'staff_code': $('staff_code').val(),
-            'name': $('name').val(),
-            'zhiweizhuangtai': $('zhiweizhuangtai').val(),
-            'identification': $('identification').val(),
-            'mobile': $('mobile').val(),
-            'leibie': $('leibie').val(),
-            'linshigonggongjia': $('linshigonggongjia').val(),
-            'suoshugongsi': $('suoshugongsi').val(),
-            'goumaishebaodangci': $('goumaishebaodangci').val(),
-            'in_date': $('in_date').val(),
-            'shifouerciruzhi': $('shifouerciruzhi').val(),
-            'out_date': $('out_date').val(),
-            'shifouzili': $('shifouzili').val(),
-            'gongziyijiesuan': $('gongziyijiesuan').val(),
-            'xianbie': $('xianbie').val(),
-            'dept_id': $('dept_id').val(),
-            'gangwei': $('gangwei').val(),
-            'floor': $('floor').val(),
-            'rengongleibie': $('rengongleibie').val(),
-            'legal_work_hour': $('legal_work_hour').val(),
-            'jiabanfeibiaozhun': $('jiabanfeibiaozhun').val(),
-            'shifouxuetu': $('shifouxuetu').val(),
-            'jieshaoren': $('jieshaoren').val(),
-            'xinzhibaodi': $('xinzhibaodi').val(),
-            'miankouhuoshifei': $('miankouhuoshifei').val(),
-            'gongziguishufeiyong': $('gongziguishufeiyong').val(),
-            'birthday': $('birthday').val(),
-            'marrige': $('marrige').val(),
-            'gender': $('gender').val(),
-            'shifoudangyuan': $('shifoudangyuan').val(),
-            'shebaohao': $('shebaohao').val(),
-            'education': $('education').val(),
-            'hometown': $('hometown').val(),
-            'ethnicity': $('ethnicity').val(),
-            'shenfenzhengdizhi': $('shenfenzhengdizhi').val(),
-            'address': $('address').val(),
-            'room': $('room').val(),
-            'gongjuxianghao': $('gongjuxianghao').val(),
-            'daishouji': $('daishouji').val(),
-            'chouyan': $('chouyan').val(),
-            'shifouqiandinghetong': $('shifouqiandinghetong').val(),
-            'hetongbianhao': $('hetongbianhao').val(),
-            'contract_from': $('contract_from').val(),
-            'hetongqixian': $('hetongqixian').val(),
-            'zhuanzhengriqi': $('zhuanzhengriqi').val(),
-            'shiyongqigongzi': $('shiyongqigongzi').val(),
-            'zhuanzhenggongzi': $('zhuanzhenggongzi').val(),
-            'emergency': $('emergency').val(),
-            'emergency_phone': $('emergency_phone').val(),
-            'yinhangkahao': $('yinhangkahao').val(),
-            'kaihuhang': $('kaihuhang').val(),
-            'zhihang': $('zhihang').val(),
-            'id': $('staff_id').val(),
+            'staff_code': $('#staff_code').val(),
+            'name': $('#name').val(),
+            'zhiweizhuangtai': $('#zhiweizhuangtai').val(),
+            'identification': $('#identification').val(),
+            'mobile': $('#mobile').val(),
+            'leibie': $('#leibie').val(),
+            'linshigonggongjia': $('#linshigonggongjia').val(),
+            'suoshugongsi': $('#suoshugongsi').val(),
+            'goumaishebaodangci': $('#goumaishebaodangci').val(),
+            'in_date': $('#in_date').val(),
+            'shifouerciruzhi': $('#shifouerciruzhi').val(),
+            'out_date': $('#out_date').val(),
+            'shifouzili': $('#shifouzili').val(),
+            'gongziyijiesuan': $('#gongziyijiesuan').val(),
+            'dept_id': $('#dept_id').val(),
+            'gangwei': $('#gangwei').val(),
+            'legal_work_hour': $('#legal_work_hour').val(),
+            'jiabanfeibiaozhun': $('#jiabanfeibiaozhun').val(),
+            'shifouxuetu': $('#shifouxuetu').val(),
+            'jieshaoren': $('#jieshaoren').val(),
+            'xinzhibaodi': $('#xinzhibaodi').val(),
+            'miankouhuoshifei': $('#miankouhuoshifei').val(),
+            'marrige': $('#marrige').val(),
+            'shifoudangyuan': $('#shifoudangyuan').val(),
+            'shebaohao': $('#shebaohao').val(),
+            'education': $('#education').val(),
+            'hometown': $('#hometown').val(),
+            'ethnicity': $('#ethnicity').val(),
+            'shenfenzhengdizhi': $('#shenfenzhengdizhi').val(),
+            'address': $('#address').val(),
+            'room': $('#room').val(),
+            'gongjuxianghao': $('#gongjuxianghao').val(),
+            'daishouji': $('#daishouji').val(),
+            'chouyan': $('#chouyan').val(),
+            'shifouqiandinghetong': $('#shifouqiandinghetong').val(),
+            'hetongbianhao': $('#hetongbianhao').val(),
+            'contract_from': $('#contract_from').val(),
+            'hetongqixian': $('#hetongqixian').val(),
+            'zhuanzhengriqi': $('#zhuanzhengriqi').val(),
+            'shiyongqigongzi': $('#shiyongqigongzi').val(),
+            'zhuanzhenggongzi': $('#zhuanzhenggongzi').val(),
+            'emergency': $('#emergency').val(),
+            'emergency_phone': $('#emergency_phone').val(),
+            'yinhangkahao': $('#yinhangkahao').val(),
+            'kaihuhang': $('#kaihuhang').val(),
+            'zhihang': $('#zhihang').val(),
+            'id': $('#staff_id').val(),
             'type':'<?=$act?>',
         },
         dataType: 'json',

@@ -52,6 +52,10 @@ class Department_m extends CI_Model {
             $str = $this->db->update_string('s_department', $data, $where);
         }
             $query = $this->db->query($str);
+            $data2 = array('xianbie'=>$xianbie, 'floor'=>$floor, 'rengongleibie'=>$rengongleibie, 'gongziguishufeiyong'=>$gongziguishufeiyong);
+            $where2 = "dept_id = ". $dept_id;
+            $str2 = $this->db->update_string('s_staff', $data2, $where2);
+            $query2 = $this->db->query($str2);
             return array('status' => 1, 'msg' => '成功！', 'data' => $this->db->affected_rows());
     }
 
