@@ -103,7 +103,11 @@
                                 <div class="form-inline">
                                     <div>
                                         <label class="form-inline" />线别:                                         
+<<<<<<< HEAD
                                             <input type="text" class="form-control " name="xianbie" id="xianbie"  value="<?=$staff['xianbie']?>" disabled="disable">
+=======
+                                            <input type="text" class="form-control " name="xianbie" id="xianbie" value="<?=$staff['xianbie']?>" readonly>
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                         </label>
                                         <label class="form-inline" />部门:                                         
                                             <select name="dept_id" id="dept_id">
@@ -117,10 +121,17 @@
                                             <input type="text" class="form-control " name="gangwei" id="gangwei"  value="<?=$staff['gangwei']?>">
                                         </label>
                                         <label class="form-inline" />所属楼层: 
+<<<<<<< HEAD
                                             <input type="text" class="form-control " name="floor" id="floor"  value="<?=$staff['floor']?>" disabled="disable">
                                         </label>
                                         <label class="form-inline" />人工类别:                                         
                                             <input type="text" class="form-control" name="rengongleibie" id="rengongleibie"  value="<?=$staff['rengongleibie']?>" disabled="disable">
+=======
+                                            <input type="text" class="form-control " name="floor" id="floor"  value="<?=$staff['floor']?>" readonly>
+                                        </label>
+                                        <label class="form-inline" />人工类别:                                         
+                                            <input type="text" class="form-control" name="rengongleibie" id="rengongleibie" value="<?=$staff['rengongleibie']?>" readonly>
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                         </label>
                                     </div>
                                 </div>
@@ -157,10 +168,17 @@
                                             </select>
                                         </label>
                                         <label class="form-inline" />工资归属费用: 
+<<<<<<< HEAD
                                             <input type="text" class="form-control" name="gongziguishufeiyong" id="gongziguishufeiyong"  value="<?=$staff['gongziguishufeiyong']?>" disabled="disable">
                                         </label>
                                         <label class="form-inline" />出生日期:                                         
                                             <input type="text" class="form-control" name="birthday" id="birthday"  value="<?=$staff['birthday']?>" disabled="disable">
+=======
+                                            <input type="text" class="form-control" name="gongziguishufeiyong" id="gongziguishufeiyong"   value="<?=$staff['gongziguishufeiyong']?>" readonly>
+                                        </label>
+                                        <label class="form-inline" />出生日期:                                         
+                                            <input type="text" class="form-control" name="birthday" id="birthday"  value="<?=$staff['birthday']?>" readonly>
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                         </label>
                                         <label class="form-inline" />出生月份:
                                             <input type="text" class="form-control" name="chushengyuefen" id="chushengyuefen"  value="<?=substr($staff['birthday'], 5, 2)?>" readonly>
@@ -182,12 +200,17 @@
                                         <label class="form-inline" />年龄:
                                             <input type="text" class="form-control " name="age" id="age"  value="<?=floor((time() - strtotime($staff['birthday']))/60/60/24/365)?>" readonly>
                                         </label>
+<<<<<<< HEAD
                                         <label class="form-inline" />性别:                         
                                             <select name="gender" id="gender" disabled="disable">
                                                 <option value="0">请选择性别</option>
                                                 <option value="1"<?=$staff['gender']==1?' selected':''?>>男</option>
                                                 <option value="2"<?=$staff['gender']==2?' selected':''?>>女</option>
                                             </select>
+=======
+                                        <label class="form-inline" />性别:               
+                                            <input type="text" class="form-control " name="gender" id="gender"  value="<?=$staff['gender']==1?'男':'女'?>" readonly>
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                         </label>
                                         <label class="form-inline" />是否党员:                                                                                                                               
                                             <select name="shifoudangyuan" id="shifoudangyuan">
@@ -407,9 +430,12 @@
                                 </div>
                                 <div class="form-inline">
                                     <div>
+<<<<<<< HEAD
                                         <label class="form-inline" />线别:                                         
                                             <input type="text" class="form-control " name="xianbie" id="xianbie" disabled="disable">
                                         </label>
+=======
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                         <label class="form-inline" />部门:                                         
                                             <select name="dept_id" id="dept_id">
                                                 <option value="0">请选择部门</option>
@@ -421,12 +447,15 @@
                                         <label class="form-inline" />岗位:                                         
                                             <input type="text" class="form-control " name="gangwei" id="gangwei">
                                         </label>
+<<<<<<< HEAD
                                         <label class="form-inline" />所属楼层: 
                                             <input type="text" class="form-control " name="floor" id="floor" disabled="disable">
                                         </label>
                                         <label class="form-inline" />人工类别:                                         
                                             <input type="text" class="form-control" name="rengongleibie" id="rengongleibie" disabled="disable">
                                         </label>
+=======
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                     </div>
                                 </div>
                                 <div class="form-inline">
@@ -461,12 +490,15 @@
                                                 <option value="否">否</option>
                                             </select>
                                         </label>
+<<<<<<< HEAD
                                         <label class="form-inline" />工资归属费用: 
                                             <input type="text" class="form-control" name="gongziguishufeiyong" id="gongziguishufeiyong" disabled="disable">
                                         </label>
                                         <label class="form-inline" />出生日期:                                         
                                             <input type="text" class="form-control" name="birthday" id="birthday" disabled="disable">
                                         </label>
+=======
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                     </div>
                                 </div>
                                 <div class="form-inline">
@@ -478,6 +510,7 @@
                                                 <option value="否">否</option>
                                             </select>
                                         </label>
+<<<<<<< HEAD
                                         <label class="form-inline" />性别:                         
                                             <select name="gender" id="gender" disabled="disable">
                                                 <option value="0">请选择性别</option>
@@ -491,6 +524,10 @@
                                                 <option value="是">是</option>
                                                 <option value="否">否</option>
                                             </select>
+=======
+                                        <label class="form-inline" />是否党员:                                         
+                                            <input type="text" class="form-control" name="shifoudangyuan" id="shifoudangyuan">
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
                                         </label>
                                         <label class="form-inline" />社保号:                                         
                                             <input type="text" class="form-control" name="shebaohao" id="shebaohao">
@@ -629,21 +666,30 @@ $('#save_staff').on('click', function(){
             'out_date': $('#out_date').val(),
             'shifouzili': $('#shifouzili').val(),
             'gongziyijiesuan': $('#gongziyijiesuan').val(),
+<<<<<<< HEAD
             'xianbie': $('#xianbie').val(),
             'dept_id': $('#dept_id').val(),
             'gangwei': $('#gangwei').val(),
             'floor': $('#floor').val(),
             'rengongleibie': $('#rengongleibie').val(),
+=======
+            'dept_id': $('#dept_id').val(),
+            'gangwei': $('#gangwei').val(),
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
             'legal_work_hour': $('#legal_work_hour').val(),
             'jiabanfeibiaozhun': $('#jiabanfeibiaozhun').val(),
             'shifouxuetu': $('#shifouxuetu').val(),
             'jieshaoren': $('#jieshaoren').val(),
             'xinzhibaodi': $('#xinzhibaodi').val(),
             'miankouhuoshifei': $('#miankouhuoshifei').val(),
+<<<<<<< HEAD
             'gongziguishufeiyong': $('#gongziguishufeiyong').val(),
             'birthday': $('#birthday').val(),
             'marrige': $('#marrige').val(),
             'gender': $('#gender').val(),
+=======
+            'marrige': $('#marrige').val(),
+>>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
             'shifoudangyuan': $('#shifoudangyuan').val(),
             'shebaohao': $('#shebaohao').val(),
             'education': $('#education').val(),
