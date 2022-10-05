@@ -129,20 +129,10 @@ class Staff extends MY_Controller
         $staff_data['kaihuhang'] = $this->input->post('kaihuhang');
         $staff_data['zhihang'] = $this->input->post('zhihang');
         $staff_data['id'] = $this->input->post('id');
-<<<<<<< HEAD
         $error_message = '';
         if($staff_data['identification'] == ''){
             $error_message .= '缺少证件号,';
         }
-=======
-        $error_message = '';        
-        if($staff_data['identification'] == ''){
-            $error_message .= '身份证错误';
-        }        
-        $staff_data['birthday'] = substr($staff_data['identification'], 6, 8);
-        $staff_data['gender'] = substr($staff_data['identification'], -2, 1)%2 == 1? 1:2;
-        // echo $staff_data['gender'];die();
->>>>>>> cb6f332c4d46b354a6d7747e077fabb95b853e7c
         if($staff_data['staff_code'] == ''){
             $error_message .= '缺少工号,';
         }
