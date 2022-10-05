@@ -33,8 +33,12 @@ class Department extends MY_Controller
         $noon_break_end = trim($this->input->post('noon_break_end'));
         $night_break_start = trim($this->input->post('night_break_start'));
         $night_break_end = trim($this->input->post('night_break_end'));
+        $xianbie = trim($this->input->post('xianbie'));
+        $rengongleibie = trim($this->input->post('rengongleibie'));
+        $floor = trim($this->input->post('floor'));
+        $gongziguishufeiyong = trim($this->input->post('gongziguishufeiyong'));
         $is_enable = trim($this->input->post('is_enable'));
-        $save = $this->Department_m->save($dept_id, $dept_name, $has_overtime, $noon_break_start, $noon_break_end, $night_break_start, $night_break_end, $is_enable, $this->session->username);
+        $save = $this->Department_m->save($dept_id, $dept_name, $has_overtime, $noon_break_start, $noon_break_end, $night_break_start, $night_break_end, $xianbie, $rengongleibie, $floor, $gongziguishufeiyong, $is_enable, $this->session->username);
         echo json_encode($save);
     }
 

@@ -136,6 +136,9 @@ class Staff extends MY_Controller
         $staff_data['zhihang'] = $this->input->post('zhihang');
         $staff_data['id'] = $this->input->post('id');
         $error_message = '';
+        if($staff_data['identification'] == ''){
+            $error_message .= '缺少证件号,';
+        }
         if($staff_data['staff_code'] == ''){
             $error_message .= '缺少工号,';
         }
