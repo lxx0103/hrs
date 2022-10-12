@@ -307,9 +307,8 @@ class Staff extends MY_Controller
             }
         }
         $filters['page'] = $this->input->get('page')?$this->input->get('page'):1;
-        $filters['page_size'] = isset($this->session->page_size)?$this->session->page_size:1000;
+        $filters['page_size'] = 2000;
         $staff = $this->Staff_m->get_all_staff($filters, false);
-        // print_r($staff);die();
         $depts = $this->Department_m->get_all_dept(0);
         $sorted_depts = array();
         foreach ($depts['data'] as $row) 
@@ -403,19 +402,19 @@ class Staff extends MY_Controller
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $line, $staff_value['out_date']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(12, $line, $staff_value['shifouzili']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(13, $line, $staff_value['gongziyijiesuan']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $line, $staff_value['xianbie']);// '线别');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(14, $line, $sorted_depts[$staff_value['dept_id']]['xianbie']);// '线别');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(15, $line, $sorted_depts[$staff_value['dept_id']]['dept_name']);// '部门名称');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(16, $line, $staff_value['gangwei']);// '岗位');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $line, $staff_value['floor']);// '楼层');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $line, $staff_value['rengongleibie']);// '人工类别');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(17, $line, $sorted_depts[$staff_value['dept_id']]['floor']);// '楼层');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(18, $line, $sorted_depts[$staff_value['dept_id']]['rengongleibie']);// '人工类别');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(19, $line, $staff_value['legal_work_hour']);// '应上班工时');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(20, $line, $staff_value['jiabanfeibiaozhun']);// '加班费标准');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(21, $line, $staff_value['shifouxuetu']);// '是否学徒');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $line, $staff_value['jieshaoren']);// '介绍人');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(24, $line, $staff_value['xinzhibaodi']);// '性质保底');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(29, $line, $staff_value['gongziguishufeiyong']);// '工资归属费用');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(29, $line, $sorted_depts[$staff_value['dept_id']]['gongziguishufeiyong']);// '工资归属费用');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(32, $line, $staff_value['birthday']);// '出生日期');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(33, $line, substr($staff_value['birthday'], 6, 2));// '生日月份');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(33, $line, substr($staff_value['birthday'], 5, 2));// '生日月份');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(34, $line, floor((time() - strtotime($staff_value['in_date']))/60/60/24/30));// '工龄');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(35, $line, $staff_value['marrige']);// '婚姻状况');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(36, $line, floor((time() - strtotime($staff_value['birthday']))/60/60/24/365));// '年龄');
