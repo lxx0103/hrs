@@ -453,10 +453,10 @@ class Calculate extends CI_Controller
             }
 
             if($staff['out_date'] != '1970-01-01' && strtotime($staff['out_date']) <= strtotime($key)){
-                $leave_time = ($legal_work_time - $work_time - intval($leave_time*60) - intval($holiday_time*60))/60;
+                $holiday_time = ($legal_work_time - $work_time - intval($leave_time*60) - intval($holiday_time*60))/60;
             }
             if(strtotime($staff['in_date']) > strtotime($key)){
-                $leave_time = ($legal_work_time - $work_time - intval($leave_time*60) - intval($holiday_time*60))/60;
+                $holiday_time = ($legal_work_time - $work_time - intval($leave_time*60) - intval($holiday_time*60))/60;
             }
             $day_sum['legal_work_time'] = $legal_work_time/60 - $holiday_time;
             $day_sum['work_time'] = $work_time/60;

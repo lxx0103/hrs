@@ -730,12 +730,12 @@ class Attendence extends MY_Controller
                 $over_time = 0;
             }
             if($staff_value['out_date'] != '1970-01-01' && strtotime($staff_value['out_date']) <= strtotime($filters['date'])){
-                $leave_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
+                $holiday_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
                 // $holiday_time = 8;
                 // $max_work_time = 0;
             }
             if(strtotime($staff_value['in_date']) > strtotime($filters['date'])){
-                $leave_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
+                $holiday_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
                 // $holiday_time = 8;
                 // $max_work_time = 0;
             }
@@ -1471,12 +1471,12 @@ class Attendence extends MY_Controller
             }
 
             if($staff['data']['out_date'] != '1970-01-01' && strtotime($staff['data']['out_date']) <= strtotime($key)){
-                $leave_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
+                $holiday_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
                 // $holiday_time = 8;
                 // $max_work_time = 0;
             }
             if(strtotime($staff['data']['in_date']) > strtotime($key)){
-                $leave_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
+                $holiday_time = ($legal_work_time - $work_time - intval($leave_time*60))/60;
                 // $holiday_time = 8;
                 // $max_work_time = 0;
             }
